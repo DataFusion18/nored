@@ -27,3 +27,59 @@
 #This has been adapted from run_pk.py from Alex Dickson at Michigan State University 2016 under repository pk
 #
 #
+
+import numpy as np
+import pylab as p
+import matplotlib.pyplot as plt
+from scipy import integrate
+
+#set time parameters
+tmin = 0 #first time point
+tmax = 450 #last time point
+tres = 1 #time point resolution
+
+NO20 = 1200 #intial concentration (nM) of nitrite after rapid total conversion of NO3 by NAR
+X = np.array([0,0,0])
+R = np.array([45,10,])
+
+#functions
+
+def NO2_of_t (X,t):
+  dNO2_dt = -R[0]
+  return dNO2_dt
+  
+def NO_of_t (X,t):
+  dNO_dt = R[0]-R[1]
+  return = dNO_dt
+
+def N2O_of_t (X,t)
+  dN2O_dt = R[1]
+  return = dN2O_dt
+  
+def dX_Dt (X,t):
+  return np.array([dNO2_dt(X,t), dNO_dt(X,t), dN2O_dt(X,t))]
+
+t = np.linspace(tmin, tmax, tres)
+
+X, infodict = integrate.odeint(dX_dt,X,t,full_output=True);
+print(infodict['message'])
+print(X)
+
+plt.figure(1)
+plt.clf()
+plt.plot(t,X.T[0],'r')
+plt.xlabel("Time (min)")
+plt.ylabel("NO2")
+p.savefig('NO2.png',bbox_inches='tight')
+
+plt.clf()
+plt.plot(t,X.T[1],'b')
+plt.xlabel("Time (min)")
+plt.ylabel("NO")
+p.savefig('NO.png',bbox_inches='tight')
+
+plt.clf()
+plt.plot(t,X.T[2],'g')
+plt.xlabel("Time (min)")
+plt.ylabel("N2O")
+p.savefig('N2O.png',bbox_inches='tight')
