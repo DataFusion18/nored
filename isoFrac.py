@@ -35,19 +35,27 @@ from scipy import integrate
 
 #set time parameters
 tmin = 0 #first time point
-tmax = 450 #last time point
+tmax = 1000 #last time point
 tres = 1 #time point resolution
 
+#set dose profile
+add_conc = [1200,1200,1200]# in nM
+add_time = [0.001,300,600]# in min
+
 NO20 = 1200 #intial concentration (nM) of nitrite after rapid total conversion of NO3 by NAR
-X = np.array([0,0,0])
-R = np.array([45,10])
+X0 = np.array([0,0,0])
+R = np.array([45,10,0])
 
 #functions
 
-def NO2_of_t (X,t):
-  dNO2_dt = -R[0]
-  return dNO2_dt
-  
+def N2O_of_t (t):
+  isum = 0
+  for dt, conc in zip(add_conc, add_time):
+      isum+=step(t-dt)*conc*np.exp(-R[0]*(t-dt))
+
+def step(x):
+  return 1*(x>0)
+
 def NO_of_t (X,t):
   dNO_dt = R[0]-R[1]
   return dNO_dt
@@ -57,7 +65,7 @@ def N2O_of_t (X,t)
   return dN2O_dt
   
 def dX_Dt (X,t):
-  return np.array([dNO2_dt(X,t), dNO_dt(X,t), dN2O_dt(X,t))]
+  return np.array([dNO2_of_t (X,t), dNO_dt(X,t), dN2O_dt(X,t))]
 
 t = np.linspace(tmin, tmax, tres)
 
