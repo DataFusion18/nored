@@ -48,7 +48,7 @@ R = np.array([45,10,0])
 
 #functions
 
-def N2O_of_t (t):
+def NO2_of_t (t):
   isum = 0
   for dt, conc in zip(add_conc, add_time):
       isum+=step(t-dt)*conc*np.exp(-R[0]*(t-dt))
