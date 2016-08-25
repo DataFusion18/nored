@@ -51,26 +51,20 @@ t = np.linspace(tmin, tmax, num=121)
 def NO2_of_t (X,t):
   #max(0,X)
   dNO2_dt = -R[0]
-  if X = 0 :
-    dNO2_dt = 0
   return dNO2_dt
   
 def NO_of_t (X,t):
-  dNO_dt = (R[0]-R[1])
-  if X = 0 :
-    dNO_dt = 0
+  dNO_dt = R[0]-R[1]
   return dNO_dt
 
 def N2O_of_t (X,t):
   dN2O_dt = R[1]
-  if X = 0 :
-    dN2O_dt = 0
   return dN2O_dt
   
 def dX_dt (X,t):
   return np.array([NO2_of_t (X,t), NO_of_t (X,t), N2O_of_t (X,t)])
 
-X, infodict = integrate.odeint(dX_dt,X0,t,full_output=True);
+X, infodict = integrate.odeint(dX_dt,X0,t,ml=non-negative,full_output=True);
 print(infodict['message'])
 print(X)
 
