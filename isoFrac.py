@@ -60,7 +60,7 @@ def NO_of_t (X,t):
   dNO_dt = R[0]-R[1]
   return dNO_dt
 
-def N2O_of_t (X,t)
+def N2O_of_t (X,t):
   dN2O_dt = R[1]
   return dN2O_dt
   
