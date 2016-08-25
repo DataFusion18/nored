@@ -49,7 +49,7 @@ t = np.linspace(tmin, tmax, num=121)
 #functions
 
 def NO2_of_t (X,t):
-  max(0,X)
+  #max(0,X)
   dNO2_dt = -R[0]
   return dNO2_dt
   
