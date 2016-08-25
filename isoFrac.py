@@ -35,7 +35,7 @@ from scipy import integrate
 
 #set time parameters
 tmin = 0.0 #first time point
-tmax = 1000.0 #last time point
+tmax = 120.0 #last time point
 
 #set dose profile
 add_conc = [1200,1200,1200]# in nM
@@ -44,7 +44,7 @@ add_time = [1,300,600]# in min
 NO20 = 1200 #intial concentration (nM) of nitrite after rapid total conversion of NO3 by NAR
 X0 = np.array([1200,0,0])
 R = np.array([45,10,0])
-t = np.linspace(tmin, tmax, num=1001)
+t = np.linspace(tmin, tmax, num=121)
 
 #functions
 
