@@ -69,7 +69,7 @@ def dX_dt (X,t):
 
 t = np.linspace(tmin, tmax, tres)
 
-X, infodict = integrate.odeint(dX_dt,X,t,full_output=True);
+X, infodict = integrate.odeint(dX_dt,X0,t,full_output=True);
 print(infodict['message'])
 print(X)
 
