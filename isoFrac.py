@@ -34,8 +34,8 @@ import matplotlib.pyplot as plt
 from scipy import integrate
 
 #set time parameters
-tmin = 0 #first time point
-tmax = 1000 #last time point
+tmin = 0.0 #first time point
+tmax = 1000.0 #last time point
 
 #set dose profile
 add_conc = [1200,1200,1200]# in nM
