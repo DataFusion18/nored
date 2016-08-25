@@ -69,6 +69,11 @@ def dX_dt (X,t):
 
 t = np.linspace(tmin, tmax, tres)
 
+plt.plot(t,NO2_of_t(t))
+plt.xlabel("Time")
+plt.ylabel("NO2 concentration")
+p.savefig('NO2_of_t.png', bbox_inches='tight')
+
 X, infodict = integrate.odeint(dX_dt,X0,t,full_output=True);
 print(infodict['message'])
 print(X)
@@ -78,16 +83,11 @@ plt.clf()
 plt.plot(t,X.T[0],'r')
 plt.xlabel("Time (min)")
 plt.ylabel("NO2")
-p.savefig('NO2.png',bbox_inches='tight')
+p.savefig('NO2.png', bbox_inches='tight')
 
 plt.clf()
 plt.plot(t,X.T[1],'b')
 plt.xlabel("Time (min)")
 plt.ylabel("NO")
-p.savefig('NO.png',bbox_inches='tight')
+p.savefig('NO.png', bbox_inches='tight')
 
-plt.clf()
-plt.plot(t,X.T[2],'g')
-plt.xlabel("Time (min)")
-plt.ylabel("N2O")
-p.savefig('N2O.png',bbox_inches='tight')
