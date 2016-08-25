@@ -65,7 +65,7 @@ def N2O_of_t (X,t):
   return dN2O_dt
   
 def dX_Dt (X,t):
-  return np.array([dNO2_of_t (X,t), dNO_dt(X,t), dN2O_dt(X,t))]
+  return np.array([dNO2_of_t (X,t), dNO_dt(X,t), dN2O_dt(X,t)])
 
 t = np.linspace(tmin, tmax, tres)
 
