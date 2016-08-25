@@ -49,15 +49,16 @@ t = np.linspace(tmin, tmax, num=121)
 #functions
 
 def NO2_of_t (X,t):
+  max(0,x)
   dNO2_dt = -R[0]
   return dNO2_dt
   
 def NO_of_t (X,t):
-  dNO_dt = R[0]-R[1]
+  dNO_dt = (R[0]-R[1])*dNO2_dt
   return dNO_dt
 
 def N2O_of_t (X,t):
-  dN2O_dt = R[1]
+  dN2O_dt = R[1]*dNO_dt
   return dN2O_dt
   
 def dX_dt (X,t):
