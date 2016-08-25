@@ -40,7 +40,7 @@ tres = 1 #time point resolution
 
 NO20 = 1200 #intial concentration (nM) of nitrite after rapid total conversion of NO3 by NAR
 X = np.array([0,0,0])
-R = np.array([45,10,])
+R = np.array([45,10])
 
 #functions
 
@@ -50,11 +50,11 @@ def NO2_of_t (X,t):
   
 def NO_of_t (X,t):
   dNO_dt = R[0]-R[1]
-  return = dNO_dt
+  return dNO_dt
 
 def N2O_of_t (X,t)
   dN2O_dt = R[1]
-  return = dN2O_dt
+  return dN2O_dt
   
 def dX_Dt (X,t):
   return np.array([dNO2_dt(X,t), dNO_dt(X,t), dN2O_dt(X,t))]
