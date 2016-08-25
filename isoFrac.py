@@ -74,16 +74,15 @@ plt.ylabel("NO2 concentration")
 p.savefig('NO2_of_t.png', bbox_inches='tight')
 
 
-#plt.clf()
-#plt.plot(t,X.T[1],'r')
-#plt.xlabel("Time (min)")
-#plt.ylabel("NO2")
-#p.savefig('NO2.png', bbox_inches='tight')
+plt.clf()
+plt.plot(t,X.T[1],'r')
+plt.xlabel("Time (min)")
+plt.ylabel("NO2")
+p.savefig('NO2.png', bbox_inches='tight')
 
-#plt.clf()
-
-#plt.plot(t,X.T[2],'b')
-#plt.xlabel("Time (min)")
-#plt.ylabel("NO")
-#p.savefig('NO.png', bbox_inches='tight')
+plt.clf()
+plt.plot(t,X.T[2],'b')
+plt.xlabel("Time (min)")
+plt.ylabel("NO")
+p.savefig('NO.png', bbox_inches='tight')
 
