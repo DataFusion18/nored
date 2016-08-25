@@ -58,11 +58,11 @@ def step(x):
   return 1*(x>0)
 
 def NO_of_t (X,t):
-  dNO_dt = R[0]-R[1]
+  dNO_dt = R[0]*NO2_of_t-X[0]*R[1]
   return dNO_dt
 
 def N2O_of_t (X,t):
-  dN2O_dt = R[1]
+  dN2O_dt = X[1]*R[1]
   return dN2O_dt
   
 def dX_dt (X,t):
