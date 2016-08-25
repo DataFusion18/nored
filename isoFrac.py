@@ -36,15 +36,15 @@ from scipy import integrate
 #set time parameters
 tmin = 0 #first time point
 tmax = 1000 #last time point
-tres = 1 #time point resolution
 
 #set dose profile
 add_conc = [1200,1200,1200]# in nM
-add_time = [0.001,300,600]# in min
+add_time = [1,300,600]# in min
 
 NO20 = 1200 #intial concentration (nM) of nitrite after rapid total conversion of NO3 by NAR
 X0 = np.array([0,0,0])
 R = np.array([45,10,0])
+t = np.linspace(tmin, tmax, num=1001)
 
 #functions
 
@@ -68,7 +68,7 @@ def N2O_of_t (X,t):
 def dX_dt (X,t):
   return np.array([dNO_dt(X,t), dN2O_dt(X,t)])
 
-t = np.linspace(tmin, tmax, tres)
+
 
 plt.plot(t,NO2_of_t(t))
 plt.xlabel("Time")
