@@ -62,24 +62,26 @@ def N2O_of_t (X,t):
 def dX_dt (X,t):
   return np.array([NO2_of_t (X,t), NO_of_t (X,t), N2O_of_t (X,t)])
 
-X, infodict = integrate.odeint(dX_dt,X0,t,full_output=True);
-print(infodict['message'])
-print(X)
+#X, infodict = integrate.odeint(dX_dt,X0,t,full_output=True);
+#print(infodict['message'])
+#print(X)
 
-plt.plot(t,X.T[0])
-plt.xlabel("Time")
-plt.ylabel("NO2 concentration")
-p.savefig('NO2_of_t.png', bbox_inches='tight')
-plt.figure(1)
-plt.clf()
-plt.plot(t,X.T[1],'r')
-plt.xlabel("Time (min)")
-plt.ylabel("NO2")
-p.savefig('NO2.png', bbox_inches='tight')
+#plt.plot(t,X.T[0])
+#plt.xlabel("Time")
+#plt.ylabel("NO2 concentration")
+#p.savefig('NO2_of_t.png', bbox_inches='tight')
+#plt.figure(1)
 
-plt.clf()
-plt.plot(t,X.T[2],'b')
-plt.xlabel("Time (min)")
-plt.ylabel("NO")
-p.savefig('NO.png', bbox_inches='tight')
+#plt.clf()
+#plt.plot(t,X.T[1],'r')
+#plt.xlabel("Time (min)")
+#plt.ylabel("NO2")
+#p.savefig('NO2.png', bbox_inches='tight')
+
+#plt.clf()
+
+#plt.plot(t,X.T[2],'b')
+#plt.xlabel("Time (min)")
+#plt.ylabel("NO")
+#p.savefig('NO.png', bbox_inches='tight')
 
