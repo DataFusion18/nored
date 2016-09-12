@@ -54,7 +54,7 @@ t = np.linspace(tmin, tmax, num=641) # vector of minutes
 def NO2_of_t (t):
   isum = 0
   for dt, conc in zip(add_time,add_conc):
-    isum += step(t-dt)*conc*np.exp(-R[0]*(t-dt))
+    isum += step(t-dt)*conc*-R[0]*(t-dt)
   return isum
   
 def step(x):
