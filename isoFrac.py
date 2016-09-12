@@ -66,7 +66,8 @@ def NOcell_of_t (X,t):
   
 def NOenv_of_t (X,t):
   dNOenv_dt = X[1]*R[2]-X[0]*R[1]
-
+  return dNOenv_dt
+  
 def N2O_of_t (X,t):
   dN2O_dt = R[3]*X[1]
   return dN2O_dt
