@@ -2,11 +2,14 @@
 #that will describe the change in isotopic value of the alpha and beta nitrogen of N2O
 #produced from anaerobic nitrate reduction
 #
-#                                                         ---> fractionation of alpha N
-#             ko            k1            k2            -
-#       NO3 -------> NO2 --------> NO -----------> N2O -
-#                                           |            -
-#                                           |              ---> fractionation of beta 
+#                                                       ---> isotopic value of alpha N
+#             knired        knored        
+#       NO2 --------> NO -----------> N2O 
+#                   ^   
+#              kin  | |  kout                   
+#                     v                               ---> isotopic value of beta N
+#                  NOenv  
+#                   
 #
 #
 #The nitrate concentration and rate constant ko are not inlcuded in the simulation because
@@ -15,13 +18,13 @@
 #Concentrations are in units of nmols/L or nM
 #
 #All species are described in the state vector X:
-#       X = [NO2,NO,N2O]
+#       X = [NO2,NO,NOenv,N2O]            the concentration of each species nM
 #
-#All rates are describe in the rate vector R:
-#       R = [k1,k2
+#       Y = [iNO2,iNO,iNOenv,iN2O]        the isotopic value of N in N species
 #
-#Where [E]=(1-f)Etot and [EI]=f*Etot
-# and Etot is the concentration of the target protein
+#All rates are described in the rate vector R:
+#       R = [knired,kin,kout,knored]
+#
 #
 #
 #This has been adapted from run_pk.py from Alex Dickson at Michigan State University 2016 under repository pk
@@ -39,53 +42,60 @@ tmax = 320.0 #last time point
 
 #set dose profile
 add_conc = [1200,1200,1200]# increase NO2 in nM
-add_time = [1,300,600]# in min
+add_time = [-0.001,320,640]# in min
 
 NO20 = 1200 #intial concentration (nM) of NO2 after rapid total conversion of NO3 by NAR
-X0 = np.array([1200,0,0]) #array of starting conditions
-R = np.array([45,10,0]) # array of rates for each step
-t = np.linspace(tmin, tmax, num=321) # vector of minutes
+X0 = np.array([0,0,0]) #array of starting conditions
+R = np.array([45,10,5,0]) # array of rates for each step
+t = np.linspace(tmin, tmax, num=641) # vector of minutes
 
 #functions
 
-def NO2_of_t (X,t):
-  #max(0,X)
-  dNO2_dt = -R[0]
-  return dNO2_dt
+def NO2_of_t (t):
+  isum = 0
+  for dt, conc in zip(add_time,add_conc):
+    isum += step(t-dt)*conc*np.exp(-R[0]*(t-dt))
+  return isum
   
-def NO_of_t (X,t):
-  dNO_dt = R[0]-R[1]
-  return dNO_dt
+def step(x):
+  return 1*(x>0)
+  
+def NOcell_of_t (X,t):
+  dNOcell_dt = R[0]*NO2_of_t(t)+X[1]*R[1]-X[1]*R[2]
+  return dNOcell_dt
+  
+def NOenv_of_t (X,t):
+  dNOenv_dt = X[1]*R[2]-X[0]*R[1]
 
 def N2O_of_t (X,t):
-  dN2O_dt = R[1]
+  dN2O_dt = R[3]*X[1]
   return dN2O_dt
   
 def dX_dt (X,t):
-  return np.array([NO2_of_t (X,t), NO_of_t (X,t), N2O_of_t (X,t)])
+  return np.array([NO2_of_t (X,t), NOcell_of_t (X,t), NOenv_of_t (X,t), N2O_of_t (X,t)])
 
-X, infodict = integrate.odeint(dX_dt,X0,t,ml>=0,full_output=True);
+X, infodict = integrate.odeint(dX_dt,X0,t,full_output=True);
 print(infodict['message'])
 print(X)
 
 plt.figure(1)
-plt.plot(t,X.T[0])
+plt.plot(t,NO2_of_t(t))
 plt.xlabel("Time")
 plt.ylabel("NO2 concentration")
 p.savefig('NO2.png', bbox_inches='tight')
 
 
 plt.clf()
-plt.plot(t,X.T[1],'r')
+plt.plot(t,X.T[0],'r')
 plt.xlabel("Time (min)")
-plt.ylabel("NO")
-p.savefig('NO.png', bbox_inches='tight')
+plt.ylabel("NOcell")
+p.savefig('NOcell.png', bbox_inches='tight')
 
 plt.clf()
-plt.plot(t,X.T[2],'b')
+plt.plot(t,X.T[1],'b')
 plt.xlabel("Time (min)")
-plt.ylabel("N2O")
-p.savefig('N2O.png', bbox_inches='tight')
+plt.ylabel("NOenv")
+p.savefig('NOenv.png', bbox_inches='tight')
 
 plt.clf()
 plt.plot(t,X.T[2],'g')
