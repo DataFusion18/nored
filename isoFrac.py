@@ -72,7 +72,7 @@ def N2O_of_t (X,t):
   return dN2O_dt
   
 def dX_dt (X,t):
-  return np.array([NOcell_dt (X,t), NOenv_dt (X,t), N2O_dt (X,t)])
+  return np.array([dNOcell_dt (X,t), dNOenv_dt (X,t), dN2O_dt (X,t)])
 
 X, infodict = integrate.odeint(dX_dt,X0,t,full_output=True);
 print(infodict['message'])
